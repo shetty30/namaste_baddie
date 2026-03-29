@@ -1,0 +1,12 @@
+{
+  "name": "namaste-baddie",
+  "version": "1.0.0",
+  "description": "Mood-based action launcher",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^33.0.0"
+  }
+}

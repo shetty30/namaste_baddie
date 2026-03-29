@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>नमस्ते Baddie</title>
+  <link rel="stylesheet" href="styles/app.css">
+</head>
+<body>
+<div class="nb">
+
+  <!-- S1: Splash -->
+  <div class="sc on" id="s1">
+    <div class="center" style="text-align:center;padding-top:2rem">
+      <div class="hero">नमस्ते<br><em>Baddie</em></div>
+      <p class="sub">Pick your mood. Get one move. Start now.</p>
+      <button class="btn btn-p" onclick="go('s2')">Start →</button>
+      <p id="splash-hint" style="margin-top:2rem;font-size:12px;color:var(--text3)"></p>
+    </div>
+  </div>
+
+  <!-- S2: Mood Selection -->
+  <div class="sc" id="s2">
+    <div class="center">
+      <p class="lbl">Step 1 of 3</p>
+      <h2 class="h2">How are you feeling right now?</h2>
+      <p class="sub">Be honest. No one's judging.</p>
+      <div class="mood-grid">
+        <button class="card m-lazy" onclick="pickMood('lazy')">
+          <div class="card-title">I feel lazy</div>
+          <div class="card-sub">Energy low. Resistance high.</div>
+        </button>
+        <button class="card m-over" onclick="pickMood('over')">
+          <div class="card-title">I'm overwhelmed</div>
+          <div class="card-sub">Too many open loops.</div>
+        </button>
+        <button class="card m-cant" onclick="pickMood('cant')">
+          <div class="card-title">I can't start</div>
+          <div class="card-sub">Stuck at the starting line.</div>
+        </button>
+        <button class="card m-bore" onclick="pickMood('bore')">
+          <div class="card-title">I'm bored</div>
+          <div class="card-sub">Mind wants stimulation.</div>
+        </button>
+      </div>
+      <button class="btn" onclick="go('s1')" style="font-size:12px;padding:8px 14px">← Back</button>
+    </div>
+  </div>
+
+  <!-- S3: Action Setup -->
+  <div class="sc" id="s3">
+    <div class="center">
+      <p class="lbl">Step 2 of 3</p>
+      <div style="margin-bottom:0.75rem">
+        <span class="tag" id="mood-tag"></span>
+        <span class="tone" id="mood-tone"></span>
+      </div>
+      <h2 class="h2">What are you about to do?</h2>
+      <p class="sub" id="action-guide"></p>
+      <input class="nb-in" id="task-input" type="text"
+             placeholder="Write one specific thing..." maxlength="80">
+      <p class="lbl">For how long?</p>
+      <div class="topts" id="timer-opts"></div>
+      <hr class="divider">
+      <div class="brow">
+        <button class="btn btn-p" onclick="startSession()">Start session →</button>
+        <button class="btn" onclick="go('s2')"
+                style="font-size:12px;padding:8px 14px">← Change mood</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- S4: Timer -->
+  <div class="sc" id="s4">
+    <div style="max-width:340px;margin:0 auto;text-align:center">
+      <p class="lbl" style="text-align:center;margin-bottom:4px">In session</p>
+      <p id="session-task"
+         style="font-size:15px;font-weight:500;margin-bottom:6px;word-break:break-word"></p>
+      <div style="margin-bottom:0.25rem">
+        <span class="tag" id="session-mood-tag"></span>
+      </div>
+      <div class="tmr-wrap">
+        <svg viewBox="0 0 200 200" width="190" height="190">
+          <circle cx="100" cy="100" r="88" fill="none"
+                  stroke="var(--border)" stroke-width="8"/>
+          <circle id="arc" cx="100" cy="100" r="88" fill="none"
+                  stroke="var(--text)" stroke-width="8" stroke-linecap="round"
+                  stroke-dasharray="553" stroke-dashoffset="0"
+                  transform="rotate(-90 100 100)"/>
+        </svg>
+        <div class="tmr-n" id="td">00:00</div>
+      </div>
+      <div class="brow" style="justify-content:center;margin-bottom:1rem">
+        <button class="btn" id="pause-btn" onclick="togglePause()">Pause</button>
+        <button class="btn btn-d" onclick="showQuit()">Quit early</button>
+      </div>
+      <div class="qbox" id="quit-confirm">
+        <p style="font-size:14px;font-weight:500;margin-bottom:6px">Leaving early?</p>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:1rem">
+          The task will not finish itself.</p>
+        <div class="brow" style="justify-content:center">
+          <button class="btn" onclick="hideQuit()">Keep going</button>
+          <button class="btn btn-d" onclick="confirmQuit()">Yes, quit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S5: Completion -->
+  <div class="sc" id="s5">
+    <div class="center-sm" style="padding-top:2rem">
+      <div id="finish-icon"></div>
+      <h2 class="h2" id="finish-title" style="text-align:center;margin-bottom:6px"></h2>
+      <p class="sub" id="finish-sub" style="text-align:center"></p>
+      <div class="sbox">
+        <p style="font-size:11px;color:var(--text2);margin-bottom:4px">Task</p>
+        <p id="finish-task"
+           style="font-size:15px;font-weight:500;word-break:break-word"></p>
+        <p id="finish-meta" style="font-size:12px;color:var(--text2);margin-top:4px"></p>
+      </div>
+      <p id="finish-streak" style="margin-bottom:1.5rem"></p>
+      <div class="brow" style="justify-content:center">
+        <button class="btn btn-p" onclick="go('s2')">One more →</button>
+        <button class="btn" onclick="go('s1')">Done for now</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/moods.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/timer.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
