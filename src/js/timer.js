@@ -1,13 +1,14 @@
+// ── Mood session timer
 const Timer = {
-  _iv: null,
-  _left: 0,
+  _iv:    null,
+  _left:  0,
   _total: 0,
   _paused: false,
   _onDone: null,
 
   start(minutes, onDone) {
-    this._total = minutes * 60
-    this._left = this._total
+    this._total  = minutes * 60
+    this._left   = this._total
     this._paused = false
     this._onDone = onDone
     this._tick()
@@ -18,43 +19,32 @@ const Timer = {
         this._tick()
         if (this._left <= 0) {
           clearInterval(this._iv)
-          if (this._onDone) this._onDone(true)
+          this._onDone && this._onDone(true)
         }
       }
     }, 1000)
   },
 
-  pause() {
-    this._paused = true
-  },
-
-  resume() {
-    this._paused = false
-  },
-
-  isPaused() {
-    return this._paused
-  },
-
-  elapsed() {
-    return this._total - this._left
-  },
+  pause()    { this._paused = true },
+  resume()   { this._paused = false },
+  isPaused() { return this._paused },
+  elapsed()  { return this._total - this._left },
 
   stop() {
     clearInterval(this._iv)
+    this._iv = null
   },
 
   _tick() {
     const m = Math.floor(this._left / 60)
     const s = this._left % 60
-    const display = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0')
-    const el = document.getElementById('td')
-    if (el) el.textContent = display
+    const el = document.getElementById('t2-num')
+    if (el) el.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0')
 
-    const arc = document.getElementById('arc')
+    const arc = document.getElementById('t2-arc')
     if (arc) {
-      const progress = (this._total - this._left) / this._total
-      arc.style.strokeDashoffset = 553 * progress
+      const pct = (this._total - this._left) / this._total
+      arc.style.strokeDashoffset = 603 * pct
     }
   }
 }
