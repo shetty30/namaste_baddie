@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>नमस्ते Baddie</title>
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#FF1F6D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NamasteBaddie">
+<link rel="apple-touch-icon" href="./assets/icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ── */
@@ -240,18 +246,15 @@ textarea.inp{resize:none;line-height:1.65}
 .nclr:hover{transform:scale(1.15)}
 .nclr.on{border-color:var(--cream);transform:scale(1.2)}
 
-/* ── GPT ── */
-#pg-gpt{padding-bottom:calc(var(--nav) + 88px)}
-.chat{display:flex;flex-direction:column;gap:13px}
-.cm{max-width:85%;padding:12px 16px;border-radius:17px;font-size:14px;line-height:1.65;font-weight:300;animation:mi .32s cubic-bezier(.22,1,.36,1) both}
-.cm.bot{background:var(--s2);border:1px solid var(--b1);color:var(--cream);border-bottom-left-radius:4px;align-self:flex-start}
-.cm.usr{background:var(--go);color:#fff;border-bottom-right-radius:4px;align-self:flex-end;font-weight:400}
-.ty{display:flex;gap:4px;padding:13px 16px;background:var(--s2);border-radius:17px;border-bottom-left-radius:4px;width:fit-content;align-self:flex-start}
-.ty span{width:7px;height:7px;border-radius:50%;background:var(--c2);animation:td 1.2s infinite}
-.ty span:nth-child(2){animation-delay:.2s}
-.ty span:nth-child(3){animation-delay:.4s}
-#cbar{position:fixed;bottom:var(--nav);left:50%;transform:translateX(-50%);width:100%;max-width:480px;padding:10px 16px;background:rgba(16,13,11,.94);backdrop-filter:blur(20px);border-top:1px solid var(--b1);display:none;gap:9px;z-index:50;align-items:center}
-#cbar.on{display:flex}
+/* ── QUOTES ── */
+#pg-gpt{padding-bottom:calc(var(--nav) + 24px)}
+.qmpills{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 22px}
+.qmpill{padding:8px 16px;border-radius:99px;border:1.5px solid var(--b2);background:transparent;color:var(--c2);font-family:var(--fh);font-size:12px;font-weight:700;letter-spacing:.03em;cursor:pointer;transition:all .2s}
+.qmpill.on{background:var(--gp);border-color:transparent;color:#fff}
+.qcard{background:var(--s2);border:1px solid var(--b1);border-radius:var(--rl);padding:32px 24px 28px;margin-top:4px;position:relative;overflow:hidden;transition:opacity .25s,transform .25s}
+.qcard::before{content:'\275D';position:absolute;top:10px;left:18px;font-size:56px;color:rgba(155,92,255,.12);line-height:1;font-family:Georgia,serif}
+.qtext{font-family:var(--fd);font-style:italic;font-size:19px;line-height:1.65;color:var(--cream);padding-top:18px}
+.qauthor{margin-top:18px;font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--purple);opacity:.8}
 #cin{flex:1;background:var(--s2);border:1px solid var(--b2);border-radius:99px;padding:11px 18px;font-size:14px;color:var(--cream);outline:none;transition:border-color .2s}
 #cin::placeholder{color:var(--c3)}
 #cin:focus{border-color:var(--pink)}
@@ -358,13 +361,24 @@ textarea.inp{resize:none;line-height:1.65}
   <div class="nlist" id="nlist"><div class="emp"><div class="ei">📝</div><div class="et">No notes yet.<br>Tap + New to start.</div></div></div>
 </div>
 
-<!-- GPT -->
+<!-- QUOTES -->
 <div class="pg" id="pg-gpt">
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px">
-    <div><span class="eyb" style="color:var(--pink)">Baddie GPT</span><div class="pgt">Talk to me.</div><div style="font-size:12px;color:var(--c2);font-weight:300;margin-top:2px">No judgment. Hinglish welcome. 💅</div></div>
-    <button class="btn btn-sm" onclick="clearChat()" style="margin-top:8px">Clear</button>
+  <div style="margin-bottom:4px">
+    <span class="eyb" style="color:var(--purple)">Daily Fuel</span>
+    <div class="pgt">Pick your mood.</div>
+    <div style="font-size:12px;color:var(--c2);font-weight:300;margin-top:2px">A quote that actually hits.</div>
   </div>
-  <div class="chat" id="chatw"></div>
+  <div class="qmpills" id="qmpills">
+    <button class="qmpill on" data-mood="lazy" onclick="setQMood('lazy')">Lazy</button>
+    <button class="qmpill" data-mood="over" onclick="setQMood('over')">Overwhelmed</button>
+    <button class="qmpill" data-mood="cant" onclick="setQMood('cant')">Can't Start</button>
+    <button class="qmpill" data-mood="bore" onclick="setQMood('bore')">Bored</button>
+  </div>
+  <div class="qcard" id="qcard">
+    <div class="qtext" id="qtext"></div>
+    <div class="qauthor" id="qauthor"></div>
+  </div>
+  <button class="btn btn-p" onclick="newQuote()" style="width:100%;margin-top:14px">New Quote →</button>
 </div>
 
 </div><!-- pages -->
@@ -375,7 +389,7 @@ textarea.inp{resize:none;line-height:1.65}
   <button class="nb" id="nb-focus" onclick="goPage('focus')"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="3" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="21"/><line x1="3" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="21" y2="12"/></svg>Focus</button>
   <button class="nb" id="nb-games" onclick="goPage('games')"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="M7 12h4M9 10v4"/><circle cx="16" cy="11" r="1" fill="currentColor" stroke="none"/><circle cx="18" cy="13" r="1" fill="currentColor" stroke="none"/></svg>Games</button>
   <button class="nb" id="nb-notes" onclick="goPage('notes')"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>Notes</button>
-  <button class="nb" id="nb-gpt" onclick="goPage('gpt')"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>Baddie</button>
+  <button class="nb" id="nb-gpt" onclick="goPage('gpt')"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Quotes</button>
 </nav>
 </div><!-- app -->
 
@@ -472,13 +486,6 @@ textarea.inp{resize:none;line-height:1.65}
   <textarea class="inp" id="nbody" placeholder="What's on your mind..." rows="10"></textarea>
 </div>
 
-<!-- CHAT BAR -->
-<div id="cbar">
-  <input id="cin" type="text" placeholder="Bolo... kya ho raha hai?" autocomplete="off">
-  <button id="csnd" onclick="sendMsg()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2" fill="#fff" stroke="none"/></svg>
-  </button>
-</div>
 
 <script>
 // ════ STORAGE ════
@@ -526,12 +533,11 @@ function goPage(p){
   void pg.offsetWidth;
   pg.classList.add('on');
   document.getElementById('nb-'+p).classList.add('on');
-  document.getElementById('cbar').classList.toggle('on',p==='gpt');
   curPg=p;
   if(p==='home'){renderHist();updateStats()}
   if(p==='focus'){renderFHist();updateLv();updateStats()}
   if(p==='notes')renderNotes();
-  if(p==='gpt'&&!chatOk)initChat();
+  if(p==='gpt')initQuotes();
 }
 
 // ════ GREETING ════
@@ -813,56 +819,67 @@ function delNote(){
   S.s('notes',S.g('notes',[]).filter(n=>n.id!==editId));closeNote();
 }
 
-// ════ BADDIE GPT ════
-const KB={
-  greet:['Arre yaar, kya scene hai? Main sun raha hoon. 👂','Haan bolo — judge-free zone hai yahan.','Baddie mode ON. Tujhe kya ho raha hai aaj?','Koi drama nahi, koi judgment nahi. Bas bol.'],
-  lazy:['Ek kaam. Sirf ek. Chota sa. Abhi. That\'s it.','Lazy feeling = brain avoiding discomfort. Override karo. 2 minute bhi chalega.','You\'re not lazy. Tum starting se dara rahe ho. Start badly — badly done beats not done.','The antidote to laziness: task ko itna chota bana do ki refuse karna embarrassing lage.'],
-  over:['Overwhelm = too many open tabs in brain. Sab band karo. Ek rakho.','Poori thali ek saath nahi khate. Ek dish lo. Wahan se shuru karo.','List bana. Ek cheez circle karo. Baaki bhool jao — for now.','One thing. Seriously, SIRF ek. Abhi choose karo.'],
-  proc:['Procrastination = time theft from your future self. Stop robbing her.','Jo cheez tum avoid kar rahe ho — exactly wahi tumhara next move hai.','Future tum stressed hogi kyunki present tum ne kuch nahi kiya. Choose wisely.','What are you putting off right now? That thing — start it. Abhi.'],
-  bore:['Boredom = unused energy. Channel karo isko. Kuch bana, kuch seekh.','Bored minds are creative minds waiting to be fed. Feed it something good.','40 minute scroll karne ki jagah — 10 minute kuch karo. Difference dekhna.'],
-  stck:['Stuck? Smallest possible next step kya hai? Woh karo.','Being stuck is temporary. Starting is the only cure. Badly start karna bhi theek hai.','Describe what you\'re stuck on — usually the act of explaining reveals the next step.'],
-  anx:['Pehle breathe karo. 4 in, 4 hold, 4 out. Kuch aur se pehle yahi karo.','Anxiety = brain overdrive. Sab kuch fix nahi karna — sirf next 5 minute handle karo.','Yaar, ek cheez at a time. Anxiety multiply hoti hai jab sab kuch hold karte ho.'],
-  mot:['Motivation pehle nahi aata — action aata hai. Action ke baad motivation aata hai.','Ready feel karne ka wait mat karo. Nobody does. Bas jao.','Discipline > motivation. Motivation ek mood hai. Discipline ek choice hai.'],
-  sad:['Yaar, main sun raha hoon. Kya chal raha hai? Poora bolo.','It\'s okay to not be okay. Kya chahiye abhi tujhe?','Kuch din aise hote hain. Iska matlab nahi ki hamesha aise rahega.'],
-  def:['Interesting. Thoda aur bata — situation exactly kya hai?','Haan, main samjha. Aur kya feel ho raha hai?','Okay. Toh question hai — ek cheez kya hogi jo aaj ka din win bana de?','Main judge nahi kar raha. Bas bolo — exactly kya rok raha hai?']
+// ════ QUOTES ════
+const QDB={
+  lazy:[
+    {q:"Start badly. Start messy. Just start. Done beats perfect every single time.",a:"Baddie Rule #1"},
+    {q:"You're not lazy. You're scared of starting. Don't give it a name — just override it.",a:"Real Talk"},
+    {q:"Motion creates motivation. Not the other way around. Move first, feel it later.",a:"Neuroscience 101"},
+    {q:"The smallest version still counts. A 1% effort beats a 0% effort every time.",a:"Momentum Theory"},
+    {q:"One minute. So badly it embarrasses you. Still better than zero.",a:"Baddie Rule #7"},
+    {q:"Aalsi nahi ho tum. Shuru karna scary lagta hai. That's fixable. Laziness isn't.",a:"Hinglish Truth"}
+  ],
+  over:[
+    {q:"You can't do everything. But you can do one thing. Pick it. Right now.",a:"Clarity Principle"},
+    {q:"Overwhelm is just too many browser tabs open. Close all. Open one.",a:"Focus Theory"},
+    {q:"The to-do list will never be empty. But right now — just this one thing.",a:"Pragmatic Truth"},
+    {q:"Narrow your world down to this moment, this task, this breath. Nothing else exists.",a:"Baddie Rule #3"},
+    {q:"One thing at full power beats ten things at 10% — every single time.",a:"Power Principle"},
+    {q:"Sab kuch ek saath nahi hoga. Ek cheez. Abhi. Baaki baad mein.",a:"Hinglish Truth"}
+  ],
+  cant:[
+    {q:"You don't need to feel ready. You just need to begin.",a:"Baddie Law"},
+    {q:"The first minute is always the hardest. After that, it gets easier. Always.",a:"Momentum Law"},
+    {q:"Action before feeling. Always. That's the whole secret — there is no other secret.",a:"Discipline Code"},
+    {q:"Start before it's perfect. Start before you're ready. The readiness comes after.",a:"Baddie Rule #0"},
+    {q:"Waiting for confidence is like waiting for a bus that doesn't exist. Walk.",a:"Wise Words"},
+    {q:"Shuru karo. Feelings baad mein aayenge. Pehle woh ek step.",a:"Hinglish Truth"}
+  ],
+  bore:[
+    {q:"Boredom is your brain begging for something worthy. Give it exactly that.",a:"Brain Science"},
+    {q:"Creative breakthroughs live on the other side of boredom. Stay there a little longer.",a:"Creator's Truth"},
+    {q:"Bored energy is peak creative energy. Don't scroll it into nothing.",a:"Baddie Rule #5"},
+    {q:"The best things ever made were made by someone with nothing to do. Go make yours.",a:"Maker's Creed"},
+    {q:"Boredom is just restlessness looking for direction. You already have one.",a:"Focus Principle"},
+    {q:"Bakwaas lag raha hai sab? Perfect. That's exactly when the good ideas show up.",a:"Hinglish Truth"}
+  ]
 };
-function detectI(t){
-  const s=t.toLowerCase();
-  if(s.match(/lazy|aalsi|tired|no energy|bhaari/))return'lazy';
-  if(s.match(/overwhelm|too much|stress|busy|sab kuch/))return'over';
-  if(s.match(/procrastinat|delay|later|kal|avoid|putting off/))return'proc';
-  if(s.match(/bor(e|ing|ed)|nothing to do|kuch nahi/))return'bore';
-  if(s.match(/stuck|block|can.t start|frozen|nahi ho raha/))return'stck';
-  if(s.match(/anxi|worried|nervous|scared|tension|darr/))return'anx';
-  if(s.match(/motivat|inspire|push me|how do|kaise/))return'mot';
-  if(s.match(/sad|down|depressed|bura|dukh|rona/))return'sad';
-  return'def';
+let qMood='lazy',qIdxMap={lazy:0,over:0,cant:0,bore:0};
+function setQMood(m){
+  qMood=m;
+  document.querySelectorAll('.qmpill').forEach(p=>p.classList.toggle('on',p.dataset.mood===m));
+  qIdxMap[m]=Math.floor(Math.random()*QDB[m].length);
+  renderQuote();
 }
-function pick(a){return a[Math.floor(Math.random()*a.length)]}
-let chatOk=false;
-function initChat(){
-  chatOk=true;document.getElementById('chatw').innerHTML='';
-  addMsg('bot',pick(KB.greet));
+function newQuote(){
+  qIdxMap[qMood]=(qIdxMap[qMood]+1)%QDB[qMood].length;
+  const c=document.getElementById('qcard');
+  c.style.opacity='0';c.style.transform='translateY(10px)';
+  setTimeout(()=>{renderQuote();c.style.opacity='1';c.style.transform='translateY(0)'},220);
 }
-function addMsg(r,t){
-  const w=document.getElementById('chatw');
-  const el=document.createElement('div');el.className='cm '+r;el.textContent=t;
-  w.appendChild(el);el.scrollIntoView({behavior:'smooth',block:'end'});
+function renderQuote(){
+  const q=QDB[qMood][qIdxMap[qMood]];
+  document.getElementById('qtext').textContent=q.q;
+  document.getElementById('qauthor').textContent='— '+q.a;
 }
-function sendMsg(){
-  const inp=document.getElementById('cin'),t=inp.value.trim();
-  if(!t)return;inp.value='';addMsg('usr',t);
-  const w=document.getElementById('chatw');
-  const ty=document.createElement('div');ty.className='ty';ty.id='ty';
-  ty.innerHTML='<span></span><span></span><span></span>';w.appendChild(ty);ty.scrollIntoView({behavior:'smooth',block:'end'});
-  setTimeout(()=>{const e=document.getElementById('ty');if(e)e.remove();addMsg('bot',pick(KB[detectI(t)]))},500+Math.random()*800);
+function initQuotes(){
+  const m=curMood&&QDB[curMood]?curMood:'lazy';
+  setQMood(m);
 }
-function clearChat(){chatOk=false;initChat()}
 
 // ════ KEYBOARD ════
 document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&!e.shiftKey){
-    if(document.activeElement===document.getElementById('cin')){e.preventDefault();sendMsg()}
     if(document.activeElement===document.getElementById('mtask')){e.preventDefault();startTimer()}
   }
 });
@@ -871,6 +888,7 @@ document.addEventListener('keydown',e=>{
 window.addEventListener('DOMContentLoaded',()=>{
   boot();setGreet();updateStats();renderHist();
   setInterval(setGreet,60000);
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
 });
 </script>
 </body>
