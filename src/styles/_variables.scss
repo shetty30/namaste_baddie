@@ -1,0 +1,60 @@
+// ═══════════════════════════════════════════
+// NAMASTE BADDIE — Design Tokens
+// ═══════════════════════════════════════════
+
+// ── Backgrounds (warm, not cold)
+$bg:       #100D0B;
+$s1:       #1D1712;   // card surface
+$s2:       #261E15;   // elevated
+$s3:       #312619;   // border/hover
+$s4:       rgba(255,255,255,0.04);
+$s5:       rgba(255,255,255,0.07);
+
+// ── Text
+$cream:    #F5EDD8;
+$cream-2:  #A8937C;
+$cream-3:  #6B5940;
+$cream-4:  rgba(245,237,216,0.12);
+
+// ── Brand Accents
+$orange:   #FF5722;
+$pink:     #FF1F6D;
+$teal:     #00CFA8;
+$gold:     #FFB800;
+$purple:   #9B5CFF;
+$blue:     #4DA6FF;
+$green:    #3DDB82;
+
+// ── Borders
+$border-1: rgba(255,255,255,0.06);
+$border-2: rgba(255,255,255,0.10);
+$border-3: rgba(255,255,255,0.18);
+
+// ── Gradients
+$g-orange:  linear-gradient(135deg, #FF5722, #FF1F6D);
+$g-pink:    linear-gradient(135deg, #FF1F6D, #9B5CFF);
+$g-teal:    linear-gradient(135deg, #00CFA8, #4DA6FF);
+$g-gold:    linear-gradient(135deg, #FFB800, #FF5722);
+$g-purple:  linear-gradient(135deg, #9B5CFF, #FF1F6D);
+$g-green:   linear-gradient(135deg, #3DDB82, #00CFA8);
+
+// ── Typography
+$font-display: 'Playfair Display', Georgia, serif;
+$font-head:    'Syne', system-ui, sans-serif;
+$font-body:    'DM Sans', system-ui, sans-serif;
+$font-mono:    'DM Mono', 'Courier New', monospace;
+
+// ── Radii
+$r:     14px;
+$r-lg:  20px;
+$r-xl:  28px;
+
+// ── Spacing
+$nav-h: 66px;
+
+// ── Shadows
+$shadow-orange: 0 20px 48px rgba(255,87,34,0.22), 0 0 0 1px rgba(255,87,34,0.18);
+$shadow-pink:   0 20px 48px rgba(255,31,109,0.22), 0 0 0 1px rgba(255,31,109,0.18);
+$shadow-teal:   0 20px 48px rgba(0,207,168,0.22),  0 0 0 1px rgba(0,207,168,0.18);
+$shadow-gold:   0 20px 48px rgba(255,184,0,0.22),  0 0 0 1px rgba(255,184,0,0.18);
+$shadow-purple: 0 20px 48px rgba(155,92,255,0.22), 0 0 0 1px rgba(155,92,255,0.18);
