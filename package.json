@@ -4,14 +4,9 @@
   "description": "Mood-based action launcher — Namaste Baddie",
   "main": "main.js",
   "scripts": {
-    "start": "npm run build-css && electron .",
-    "dev": "concurrently \"sass src/styles/app.scss src/styles/app.css --watch --no-source-map\" \"electron .\"",
-    "build-css": "sass src/styles/app.scss src/styles/app.css --no-source-map",
-    "build": "npm run build-css"
+    "start": "electron ."
   },
   "devDependencies": {
-    "concurrently": "^8.2.0",
-    "electron": "^33.0.0",
-    "sass": "^1.69.0"
+    "electron": "^33.0.0"
   }
 }

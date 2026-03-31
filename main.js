@@ -17,7 +17,7 @@ function createWindow() {
     show: false
   })
 
-  win.loadFile('src/index.html')
+  win.loadFile('src/namaste_baddie_v2.html')
 
   win.once('ready-to-show', () => {
     win.show()
